@@ -1,0 +1,72 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+h1 {
+  font-size: 20px;
+}
+
+ul {
+  display: block;
+  width: 100%;
+  height: 160px;
+  clear: both;
+  text-align: center;
+}
+
+button {
+  background: #03A9F4;
+  padding: 15px;
+  border: none;
+  color: white;
+  font-size: 17px;
+  border-radius: 5px;
+}
+.card {
+  display: inline-block;
+  list-style: none;
+  height: 110px;
+  width: 80px;
+  border-radius: 5px;
+  border: solid 1px black;
+  margin: 5px;
+  box-shadow: 0px 0px 11px rgba(22, 22, 22, 0.83);
+}
+
+.spades {
+  background: #f6f6f6;
+}
+.spades::after {
+  content: '♠';
+  display: block;
+}
+
+
+.hearts {
+  background: #f6f6f6;
+  color: red;
+}
+.hearts::after {
+  content: '♥';
+  display: block;
+}
+
+.diamonds {
+  background: #f6f6f6;
+  color: red;
+}
+.diamonds::after {
+  content: '♦';
+  display: block;
+}
+
+.clubs {
+  background: #f6f6f6;
+  border: solid 1px black;
+}
+.clubs::after {
+  content: '♣';
+  display: block;
+}
