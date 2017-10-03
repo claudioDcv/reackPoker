@@ -7,8 +7,7 @@ const obtainCards = (token) => `https://services.comparaonline.com/dealer/deck/$
 const getCards = cb => {
   axios.post(obtainToken)
   .then((response) => {
-    localStorage.setItem('token',response.data);
-    axios.get(obtainCards(localStorage.getItem('token')))
+    axios.get(obtainCards(response.data))
     .then((response) => {
       cb(response)
     })
