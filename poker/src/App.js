@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 
 import { getCards } from './services/pokerApi';
+import pokerPlay from './services/pokerPlay';
 
 class App extends Component {
   constructor(props) {
@@ -26,15 +27,15 @@ class App extends Component {
         this.setState({ 'firstHandShow': true });
       }
     };
-    if (name === 'secondHand') {
-      this.setState({ 'secondHandShow': false });
-    } else {
-      this.setState({ 'firstHandShow': false });
-    }
+    this.setState({
+      'secondHandShow': name !== 'secondHand',
+      'firstHandShow': name === 'secondHand',
+    });
     getCards(cb);
   }
   checkWin() {
     console.log('CHAN!!!');
+    pokerPlay.check('1', this.state.firstHand, this.state.secondHand);
   }
   render() {
     return (
@@ -43,20 +44,31 @@ class App extends Component {
           <h1 className="App-title">Poker</h1>
         </header>
         <h1>Jugador 1</h1>
-        {this.state.firstHandShow && <button onClick={() => {this.handlerClick('firstHand'); }}>Revolver</button>}
+        {this.state.firstHandShow && (
+          <button onClick={() => {this.handlerClick('firstHand'); }}>
+            Revolver
+          </button>
+        )}
         <ul>
           {this.state.firstHand.map((e, i) => (
             <li key={i} className={'card ' + e.suit}>{e.number}</li>
           ))}
         </ul>
         <h1>Jugador 2</h1>
-        {this.state.secondHandShow && <button onClick={() => {this.handlerClick('secondHand'); }}>Revolver</button>}
+        {this.state.secondHandShow && (
+          <button onClick={() => {this.handlerClick('secondHand'); }}>
+            Revolver
+          </button>
+        )}
         <ul>
           {this.state.secondHand.map((e, i) => (
             <li key={i} className={'card ' + e.suit}>{e.number}</li>
           ))}
         </ul>
-        {this.state.secondHand.length > 0 && this.state.firstHand.length > 0 && <button onClick={this.checkWin}>Seleccionar Mano Ganadora</button>}
+        {this.state.secondHand.length > 0 && this.state.firstHand.length > 0 && (
+          <button onClick={this.checkWin}>
+            Seleccionar Mano Ganadora
+          </button>)}
       </div>
     );
   }

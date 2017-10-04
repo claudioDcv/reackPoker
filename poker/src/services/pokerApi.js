@@ -1,22 +1,26 @@
 import axios from 'axios';
 
-const obtainToken = 'https://services.comparaonline.com/dealer/deck';
-const obtainCards = (token) => `https://services.comparaonline.com/dealer/deck/${token}/deal/5`;
-
+const api = 'https://services.comparaonline.com';
+const obtainToken = `${api}/dealer/deck`;
+const obtainCards = token => `${api}/dealer/deck/${token}/deal/5`;
+const getToken = () => localStorage.getItem('token');
+const setToken = token => localStorage.setItem('token', token);
 
 const getCards = cb => {
-  axios.post(obtainToken)
+  axios.get(obtainCards(getToken()))
   .then((response) => {
-    axios.get(obtainCards(response.data))
+    cb(response)
+  })
+  .catch((error) => {
+    console.log(error);
+    axios.post(obtainToken)
     .then((response) => {
-      cb(response)
+      setToken(response.data);
+      getCards(cb);
     })
     .catch((error) => {
       getCards(cb);
     });
-  })
-  .catch((error) => {
-    getCards(cb);
   });
 };
 
