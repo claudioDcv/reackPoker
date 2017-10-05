@@ -163,7 +163,7 @@ const whoIsWin = v => {
   if (v === -1) {
     return 'Empate';
   }
-  return v === 0 ? 'Juagador 1 Gana' : 'Juagador 2 Gana';
+  return v === 0 ? 'Jugador 1 Gana' : 'Jugador 2 Gana';
 }
 
 export const checkGame = (h1, h2) => {
@@ -176,7 +176,7 @@ export const checkGame = (h1, h2) => {
     console.log('onePair', whoIsWin(onePair(hand1, hand2)));
     console.log('twoPair', whoIsWin(twoPair(hand1, hand2)));
     console.log('threeOfAKind', whoIsWin(threeOfAKind(hand1, hand2)));
-    console.log('straight', straight(hand1, hand2));
+    console.log('straight', whoIsWin(straight(hand1, hand2)));
   }
   console.log(winner);
 }
