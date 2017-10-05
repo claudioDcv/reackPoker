@@ -24,6 +24,14 @@ const groupBy = xs => {
   }, {});
 };
 
+const obtainOneSuit = arr => {
+  const list = []
+  Object.keys(arr).forEach(e => {
+    list.push(arr[e])
+  })
+  return list;
+}
+
 const obtainPair = arr => {
   const list = []
   Object.keys(arr).forEach(e => {
@@ -140,7 +148,12 @@ const straight = (h1, h2) => {
 }
 // 6. Flush: ​ ​All​ ​cards​ ​of​ ​the​ ​same​ ​suit.
 const fush = (h1, h2) => {
+  h1 = obtainOneSuit(groupBy(h1[1]));
+  h2 = obtainOneSuit(groupBy(h2[1]));
 
+  if (h1.length === 1 && h2.length !== 1) return 0
+  if (h1.length !== 1 && h2.length === 1) return 1
+  return -1
 }
 // 7. Full​ ​House:​ ​Three​ ​of ​ ​a​ ​kind ​ and​ ​ ​a ​ pair.​
 const fullHouse = (h1, h2) => {
@@ -177,6 +190,7 @@ export const checkGame = (h1, h2) => {
     console.log('twoPair', whoIsWin(twoPair(hand1, hand2)));
     console.log('threeOfAKind', whoIsWin(threeOfAKind(hand1, hand2)));
     console.log('straight', whoIsWin(straight(hand1, hand2)));
+    console.log('fush', whoIsWin(fush(hand1, hand2)));
   }
   console.log(winner);
 }
