@@ -34,6 +34,55 @@ const obtainPair = arr => {
   return list;
 }
 
+const obtainThree = arr => {
+  const list = []
+  Object.keys(arr).forEach(e => {
+    if (arr[e].length === 3) {
+      list.push(arr[e])
+    }
+  })
+  return list;
+}
+
+const straightIndividual = (h1) => {
+  let result = false;
+  const arr = h1[0]
+  // Simple Straight
+  arr.forEach((e, i) => {
+    if (e + 1 === arr[i + 1]) {
+      result = true
+    }
+  })
+  // desorder Straight
+  let endOrder = 0
+  let isOk = false
+  arr.forEach((e, i) => {
+    if (e + 1 !== arr[i + 1]) {
+      if (!isOk) {
+        endOrder = e
+        isOk = true
+      }
+
+    }
+  })
+  const indexEndOrder = arr.indexOf(endOrder)
+  //reorder consecuvite
+  const arrA = arr.filter((e, i) => i <= indexEndOrder)
+  const arrB = arr.filter((e, i) => i > indexEndOrder)
+  const reorderConsecutive = arrB.concat(arrA)
+  //Eval consecuvite array
+  let isStraight = true
+  reorderConsecutive.forEach((e, i) => {
+    if (i !== reorderConsecutive.length) {
+      const a = e
+      const b = reorderConsecutive[i + 1] - 1 || e
+      if(!(a === b || (a === 14 && b === 1))){
+        isStraight = false
+      }
+    }
+  })
+  return isStraight
+}
 // -1 no gana ninguno
 // 0 gana left
 // 1 gana rigth
@@ -74,11 +123,20 @@ const twoPair = (h1, h2) => {
 }
 // 4. Three​ ​of​ a​ ​ Kind:​ ​ Three​ ​ cards​ ​ ​of ​ the​ ​ ​same​ ​value.
 const threeOfAKind = (h1, h2) => {
+  h1 = obtainThree(groupBy(h1[0]));
+  h2 = obtainThree(groupBy(h2[0]));
 
+  if (h1.length === 1 && h2.length !== 1) return 0
+  if (h1.length !== 1 && h2.length === 1) return 1
+  return -1
 }
 // 5. Straight:​ ​All​ ​cards​ ​are ​ ​consecutive ​ ​values.
 const straight = (h1, h2) => {
-
+  const h1Result = straightIndividual(h1)
+  const h2Result = straightIndividual(h2)
+  if (h1Result && !h2Result) return 0
+  if (!h1Result && h2Result) return 1
+  return -1
 }
 // 6. Flush: ​ ​All​ ​cards​ ​of​ ​the​ ​same​ ​suit.
 const fush = (h1, h2) => {
@@ -101,15 +159,24 @@ const royalFlush = (h1, h2) => {
 
 }
 
+const whoIsWin = v => {
+  if (v === -1) {
+    return 'Empate';
+  }
+  return v === 0 ? 'Juagador 1 Gana' : 'Juagador 2 Gana';
+}
+
 export const checkGame = (h1, h2) => {
   const hand1 = consistentCard(h1)
   const hand2 = consistentCard(h2)
   let winner = -1;
 
   if(!equal(hand1, hand2)) {// true = equal, false = distinc
-    console.log('highCard', highCard(hand1, hand2));
-    console.log('onePair', onePair(hand1, hand2));
-    console.log('twoPair', twoPair(hand1, hand2));
+    console.log('highCard', whoIsWin(highCard(hand1, hand2)));
+    console.log('onePair', whoIsWin(onePair(hand1, hand2)));
+    console.log('twoPair', whoIsWin(twoPair(hand1, hand2)));
+    console.log('threeOfAKind', whoIsWin(threeOfAKind(hand1, hand2)));
+    console.log('straight', straight(hand1, hand2));
   }
   console.log(winner);
 }
