@@ -1,7 +1,8 @@
 import axios from 'axios';
 
-const obtainToken = 'https://services.comparaonline.com/dealer/deck';
-const obtainCards = (token, n) => `https://services.comparaonline.com/dealer/deck/${token}/deal/${n}`;
+const api = 'https://services.comparaonline.com'
+const obtainToken = `${api}/dealer/deck`
+const obtainCards = (token, n) => `${api}/dealer/deck/${token}/deal/${n}`
 
 const getToken = () => localStorage.getItem('token')
 const setToken = token => localStorage.setItem('token', token)
@@ -56,27 +57,3 @@ export const getCards = cb => {
     });
   }
 }
-//
-// const getCards = cb => {
-//   axios.post(obtainToken)
-//   .then((response) => {
-//     axios.get(obtainCards(response.data))
-//     .then((response) => {
-//       cb(response)
-//     })
-//     .catch((error) => {
-//       debugger
-//       console.log(error.response.status);
-//       getCards(cb);
-//     });
-//   })
-//   .catch((error) => {
-//     debugger
-//     console.log(error.response.status);
-//     getCards(cb);
-//   });
-// };
-//
-// export {
-//   getCards,
-// };

@@ -15,14 +15,6 @@ h1 {
   text-align: center;
 }
 
-button {
-  background: #03A9F4;
-  padding: 15px;
-  border: none;
-  color: white;
-  font-size: 17px;
-  border-radius: 5px;
-}
 .poker-card {
   display: inline-block;
   list-style: none;
