@@ -1,6 +1,6 @@
-# POKER TEST
+# POKER TEST
 
-## instructions
+## instructions
 
 - `cd poker`
 - `npm install` or `yarn install`
